@@ -1,0 +1,22 @@
+/*
+ * fifo.h
+ *
+ *  Created on: 10 Oct 2026
+ *      Author: ouadd
+ */
+
+#ifndef FIFO_H_
+#define FIFO_H_
+
+#include <stdint.h>
+#include "stm32f4xx.h"
+
+#define FIFOMAXSIZE 256
+
+
+
+void Fifo_init(void);
+uint8_t Fifo_Write(uint32_t data);
+uint8_t Fifo_Read(uint32_t *data);
+
+#endif /* FIFO_H_ */

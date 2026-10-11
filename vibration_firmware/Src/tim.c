@@ -1,0 +1,26 @@
+#include "tim.h"
+
+
+void Tim2_Init(void)
+{
+  RCC->APB1ENR |= (1U<<0);
+
+  /*Set Prescaler value*/
+  TIM2->PSC = 1600-1;  /*16000000 /1600=10000*/
+
+  /*Set auto reload value*/
+  TIM2->ARR = 10-1;/*10000/10 = 1000 Hz*/
+
+  /*Reset Counter*/
+  TIM2->CNT = 0;
+
+  /*Interrupt enable*/
+  TIM2->DIER |= (1U<<0);
+
+  /*Enable Timer*/
+  TIM2->CR1 |= (1U<<0);
+
+  /*Enable Timer Interrupt in NVIC*/
+   NVIC_EnableIRQ(TIM2_IRQn);
+
+}

@@ -1,0 +1,14 @@
+/*
+ * uart.h
+ *
+ *  Created on: 7 Oct 2026
+ *      Author: ouadd
+ */
+
+#ifndef UART_H_
+#define UART_H_
+
+
+#include "stm32f4xx.h"
+
+#endif /* UART_H_ */

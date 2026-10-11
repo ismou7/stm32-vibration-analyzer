@@ -1,0 +1,16 @@
+/*
+ * signal.h
+ *
+ *  Created on: 10 Oct 2026
+ *      Author: ouadd
+ */
+
+#ifndef SIGNAL_H_
+#define SIGNAL_H_
+
+#include "arm_math.h"
+#include <stdint.h>
+
+
+#define IMP_RSP_LENGTH		31
+#endif /* SIGNAL_H_ */

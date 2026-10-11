@@ -1,0 +1,2 @@
+C:/STM32F4_BareMetal_Workspace/GitProjekt/stm32-vibration-analyzer/vibration_firmware/chip_headers/CMSIS/Include/core_cm4.h:1688:22:__NVIC_EnableIRQ	2
+../Src/tim.c:4:6:Tim2_Init	1

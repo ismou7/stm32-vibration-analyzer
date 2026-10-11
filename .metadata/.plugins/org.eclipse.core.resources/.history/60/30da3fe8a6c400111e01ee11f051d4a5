@@ -1,0 +1,8 @@
+#include "fifo.h"
+
+
+void Fifo_Write(uint32_t data)
+{
+
+}
+

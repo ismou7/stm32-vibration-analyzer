@@ -1,0 +1,223 @@
+#include <stdint.h>
+#include <stdio.h>
+#include "uart.h"
+#include "adc.h"
+#include "tim.h"
+#include "fifo.h"
+#include "signal.h"
+
+uint32_t sensor_data[FIFOMAXSIZE];
+uint8_t  g_Fifo_Full;
+uint8_t g_Fifo_read_flg;
+uint8_t g_Process;
+uint32_t output_sig_arr[FIFOMAXSIZE+FIR_100Hz_LEN-1];
+float REX[FIFOMAXSIZE/2];
+float IMX[FIFOMAXSIZE/2];
+static void clear_data_buffer(void);
+static void read_data(uint32_t *data);
+static void fpu_enable(void);
+void serial_plot_rex(void);
+void get_dft_output_mag(void);
+void calc_sig_idft(float32_t * idft_out_arr,float32_t *sig_src_rex_arr, float32_t *sig_src_imx_arr,uint32_t idft_length);
+static void convolution(uint32_t *sig_src_arr,uint32_t *sig_dest_arr,float32_t *Imp_response_arr,uint32_t sig_src_length, uint32_t Imp_response_length);
+
+int __io_putchar(int ch)
+{
+	uart_write(ch);
+
+	return ch;
+}
+int main(void)
+{
+	/*Enable FPU*/
+	fpu_enable();
+
+  /*Init Uarttx driver*/
+  UART2_TX_Init();
+
+  /*Init ADC1 channel1*/
+  ADC1_Init();
+
+  /*Start ADC1 conversion*/
+  start_conversion();
+
+  /*Init TIM2*/
+  Tim2_Init();
+
+  /*Init Fifo*/
+  Fifo_init();
+
+  while(1)
+  {
+     if(g_Process == 1)
+     {
+        /*clear sensor buffer*/
+    	clear_data_buffer();
+
+    	/*Read Data*/
+    	for(int i = 0; i<FIFOMAXSIZE;i++)
+    	{
+    	  while(g_Fifo_Full == 1){}
+
+    	  read_data(&sensor_data[i]);
+    	}
+
+    	/*Convolution*/
+    	convolution(sensor_data,output_sig_arr,FIR_High_Pass_400Hz,FIFOMAXSIZE,FIR_100Hz_LEN);
+    	/*for(int j = 0;j <FIFOMAXSIZE+FIR_100Hz_LEN-1;j++)
+    	{
+    		if(j<FIFOMAXSIZE)
+    		{
+    		 printf("%ld,",sensor_data[j]);
+    		}
+    		printf("%ld\n\r",output_sig_arr[j]);
+    	}*/
+  	  calc_sig_dft((float32_t*)sensor_data,
+  	 				  (float32_t *)REX,
+  	 				  (float32_t *)IMX,
+  	 				  (uint32_t)FIFOMAXSIZE);
+
+
+  	  get_dft_output_mag();
+
+  	  serial_plot_rex();
+    	g_Process = 0;
+     }
+  }
+}
+
+void calc_sig_idft(float32_t * idft_out_arr,
+		           float32_t *sig_src_rex_arr,
+				   float32_t *sig_src_imx_arr,
+				   uint32_t idft_length)
+{
+
+	 int i,k;
+
+	 /*Normalize amplitudes*/
+	 for( k = 0; k < idft_length/2; k++)
+	 {
+		 sig_src_rex_arr[k] =  sig_src_rex_arr[k]/(idft_length/2);
+		 sig_src_imx_arr[k] =  -sig_src_imx_arr[k]/(idft_length/2);
+
+	 }
+
+	 /*Deal with idx 0*/
+	 sig_src_rex_arr[0] =  sig_src_rex_arr[0]/(idft_length);
+	 sig_src_imx_arr[0] =  -sig_src_imx_arr[0]/(idft_length);
+
+	 /*Deal with idx n/2*/
+	 sig_src_rex_arr[idft_length/2] =  sig_src_rex_arr[idft_length/2]/(idft_length);
+	 sig_src_imx_arr[idft_length/2] =  -sig_src_imx_arr[idft_length/2]/(idft_length);
+
+	 /*Clear output buffer*/
+	 for( i = 0; i < idft_length; i++)
+	 {
+		 idft_out_arr[i] = 0;
+	 }
+
+	 /*Perform IDFT*/
+	 for( k = 0; k < idft_length/2;k++)
+	 {
+		 for( i = 0; i <idft_length; i++)
+		 {
+			 idft_out_arr[i] =  idft_out_arr[i] + sig_src_rex_arr[k]*cos(2*PI*k*i/idft_length);
+			 idft_out_arr[i] =  idft_out_arr[i] + sig_src_imx_arr[k]*sin(2*PI*k*i/idft_length);
+
+		 }
+	 }
+
+}
+void get_dft_output_mag(void)
+{
+	for( int k = 0; k < (FIFOMAXSIZE/2); k++)
+	{
+		REX[k] = fabs(REX[k]);
+	}
+}
+void serial_plot_rex(void)
+{
+
+	for( int j = 0; j < (FIFOMAXSIZE/2); j++)
+	{
+		printf("%f\r\n",REX[j]);
+
+	}
+}
+
+
+static void convolution(uint32_t *sig_src_arr,uint32_t *sig_dest_arr,float32_t *Imp_response_arr,uint32_t sig_src_length, uint32_t Imp_response_length)
+{
+	int i , j;
+
+	uint32_t sig_dest_length = sig_src_length + Imp_response_length -1;
+
+	/*Clear dest array*/
+	for (i =0;i <sig_dest_length;i++)
+	{
+		sig_dest_arr[i] = 0;
+	}
+
+	/*Convolution*/
+	for (i = 0 ;i <sig_src_length;i++)
+	{
+		for(j = 0;j<Imp_response_length;j++)
+		{
+		  sig_dest_arr[i+j]= sig_dest_arr[i+j] + sig_src_arr[i]*Imp_response_arr[j];
+		}
+	}
+}
+static void read_data(uint32_t *data)
+{
+	g_Fifo_read_flg = Fifo_Read(data);
+
+	if(g_Fifo_read_flg == 0)
+	{
+	  g_Fifo_Full = 1;
+	}
+	else
+	{
+	  g_Fifo_Full = 0;
+	}
+}
+static void clear_data_buffer(void)
+{
+	for(int i = 0;i <FIFOMAXSIZE;i++ )
+	{
+		sensor_data[i]= 0;
+	}
+}
+static void Tim2_callback(void)
+{
+	/* check if Fifo is not full */
+
+	if(g_Fifo_Full == 1) /* Not full*/
+	{
+		g_Fifo_Full = Fifo_Write(read_ADC1());
+	}
+	else
+	{
+		g_Process = 1;
+	}
+}
+void TIM2_IRQHandler(void)
+{
+
+  if(TIM2->SR & SR_UIF)
+  {
+   /*Clear update interrupt flag*/
+   TIM2->SR &= ~SR_UIF;
+
+   Tim2_callback();
+  }
+}
+
+static void fpu_enable(void)
+{
+	/*Enable Floating Point Unit :  Enable CP10 and CP11 full access*/
+	SCB->CPACR |= (1U<<20);
+	SCB->CPACR |= (1U<<21);
+	SCB->CPACR |= (1U<<22);
+	SCB->CPACR |= (1U<<23);
+
+}

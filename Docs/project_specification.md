@@ -12,8 +12,4 @@
 
 ## 3. Signal Processing & Filtering
 - Digital Filter: FIR Low-Pass Filter to eliminate high-frequency noise.
-- Frequency Analysis: Custom Discrete Fourier Transform (DFT) for magnitude extraction.
 
-## 4. Operational States & Fault Detection
-- Normal State: Background room noise / ambient sound with low signal amplitude and low RMS.
-- Fault / Trigger State: High-amplitude acoustic impact or a dominant frequency peak exceeding defined statistical thresholds.

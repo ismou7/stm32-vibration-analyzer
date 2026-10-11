@@ -1,0 +1,3 @@
+../Src/fifo.c:7:6:Fifo_init	4	static
+../Src/fifo.c:11:9:Fifo_Write	24	static
+../Src/fifo.c:36:9:Fifo_Read	24	static

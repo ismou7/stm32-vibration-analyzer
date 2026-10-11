@@ -1,0 +1,21 @@
+09:02:24 **** Incremental Build of configuration Debug for project vibration_firmware ****
+make -j8 all 
+arm-none-eabi-gcc "../Src/fifo.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DSTM32 -DSTM32F4 -DSTM32F446RETx -DSTM32F411xE -DARM_MATH_CM4 -D__FPU_PRESENT -DNUCLEO_F446RE -c -I../Inc -I"C:/STM32F4_BareMetal_Workspace/GitProjekt/stm32-vibration-analyzer/vibration_firmware/chip_headers/CMSIS/Include" -I"C:/STM32F4_BareMetal_Workspace/GitProjekt/stm32-vibration-analyzer/vibration_firmware/chip_headers/CMSIS/Device/ST/STM32F4xx/Include" -I"C:/STM32F4_BareMetal_Workspace/GitProjekt/stm32-vibration-analyzer/vibration_firmware/chip_headers/CMSIS/DSP/Include" -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Src/fifo.d" -MT"Src/fifo.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Src/fifo.o"
+In file included from C:/STM32F4_BareMetal_Workspace/GitProjekt/stm32-vibration-analyzer/vibration_firmware/chip_headers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h:155,
+                 from ../Inc/fifo.h:12,
+                 from ../Src/fifo.c:1:
+C:/STM32F4_BareMetal_Workspace/GitProjekt/stm32-vibration-analyzer/vibration_firmware/chip_headers/CMSIS/Device/ST/STM32F4xx/Include/stm32f411xe.h:52: warning: "__FPU_PRESENT" redefined
+   52 | #define __FPU_PRESENT             1U       /*!< FPU present                                   */
+      | 
+<command-line>: note: this is the location of the previous definition
+arm-none-eabi-gcc -o "vibration_firmware.elf" @"objects.list"  -larm_cortexM4lf_math -mcpu=cortex-m4 -T"C:\STM32F4_BareMetal_Workspace\GitProjekt\stm32-vibration-analyzer\vibration_firmware\STM32F446RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="vibration_firmware.map" -Wl,--gc-sections -static -L"C:\STM32F4_BareMetal_Workspace\GitProjekt\stm32-vibration-analyzer\vibration_firmware\chip_headers\CMSIS\Lib\GCC" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: vibration_firmware.elf
+ 
+arm-none-eabi-size  vibration_firmware.elf 
+arm-none-eabi-objdump -h -S vibration_firmware.elf  > "vibration_firmware.list"
+   text	   data	    bss	    dec	    hex	filename
+   6328	    216	   5104	  11648	   2d80	vibration_firmware.elf
+Finished building: default.size.stdout
+ 
+Finished building: vibration_firmware.list
+ 

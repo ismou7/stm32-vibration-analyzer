@@ -1,0 +1,13 @@
+/*
+ * tim.h
+ *
+ *  Created on: 10 Oct 2026
+ *      Author: ouadd
+ */
+
+#ifndef TIM_H_
+#define TIM_H_
+
+
+#include "stm32f4xx.h"
+#endif /* TIM_H_ */

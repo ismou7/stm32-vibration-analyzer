@@ -1,0 +1,101 @@
+#include <stdint.h>
+#include <stdio.h>
+#include "uart.h"
+#include "adc.h"
+#include "tim.h"
+#include "fifo.h"
+
+uint32_t sensor_data[FIFOMAXSIZE];
+uint8_t  g_Fifo_Full;
+uint8_t g_Fifo_read_flg;
+uint8_t g_Process;
+
+static void clear_data_buffer(void);
+static void read_data(uint32_t *data);
+int __io_putchar(int ch)
+{
+	uart_write(ch);
+
+	return ch;
+}
+int main(void)
+{
+  /*Init Uarttx driver*/
+  UART2_TX_Init();
+
+  /*Init ADC1 channel1*/
+  ADC1_Init();
+
+  /*Start ADC1 conversion*/
+  start_conversion();
+
+  /*Init TIM2*/
+  Tim2_Init();
+
+  /*Init Fifo*/
+  Fifo_init();
+
+  while(1)
+  {
+     if(g_Process == 1)
+     {
+        /*clear sensor buffer*/
+    	clear_data_buffer();
+
+    	/*Read Data*/
+    	for(int i = 0; i<FIFOMAXSIZE;i++)
+    	{
+    	  while(g_Fifo_Full == 1){}
+
+    	  read_data(&sensor_data[i]);
+    	  printf("%ld\r\n",sensor_data[i]);
+    	}
+
+    	g_Process = 0;
+     }
+  }
+}
+static void read_data(uint32_t *data)
+{
+	g_Fifo_read_flg = Fifo_Read(data);
+
+	if(g_Fifo_read_flg == 0)
+	{
+	  g_Fifo_Full = 1;
+	}
+	else
+	{
+	  g_Fifo_Full = 0;
+	}
+}
+static void clear_data_buffer(void)
+{
+	for(int i = 0;i <FIFOMAXSIZE;i++ )
+	{
+		sensor_data[i]= 0;
+	}
+}
+static void Tim2_callback(void)
+{
+	/* check if Fifo is not full */
+
+	if(g_Fifo_Full == 1) /* Not full*/
+	{
+		g_Fifo_Full = Fifo_Write(read_ADC1());
+	}
+	else
+	{
+		g_Process = 1;
+	}
+}
+void TIM2_IRQHandler(void)
+{
+
+  if(TIM2->SR & SR_UIF)
+  {
+   /*Clear update interrupt flag*/
+   TIM2->SR &= ~SR_UIF;
+
+   Tim2_callback();
+  }
+}

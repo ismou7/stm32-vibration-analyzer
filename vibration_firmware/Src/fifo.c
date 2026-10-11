@@ -1,0 +1,60 @@
+#include "fifo.h"
+
+volatile uint32_t *Fifo_Write_ptr;
+volatile uint32_t *Fifo_Read_ptr;
+uint32_t  SensorDataPuffer[FIFOMAXSIZE];
+
+void Fifo_init(void)
+{
+  Fifo_Write_ptr = Fifo_Read_ptr = &SensorDataPuffer[0];
+}
+uint8_t Fifo_Write(uint32_t data)
+{
+   volatile uint32_t *Fifo_Write_ptr_next;
+
+   Fifo_Write_ptr_next= Fifo_Write_ptr +1;
+
+   //FiFo size is reached
+   if(Fifo_Write_ptr_next >= &SensorDataPuffer[FIFOMAXSIZE])
+   {
+	   Fifo_Write_ptr_next = &SensorDataPuffer[0];
+   }
+
+   // FIFO array is Full
+   if(Fifo_Write_ptr_next == Fifo_Read_ptr)
+   {
+	 return 0;
+   }
+
+   *Fifo_Write_ptr = data;
+
+   Fifo_Write_ptr = Fifo_Write_ptr_next;
+
+   return 1;
+}
+
+uint8_t Fifo_Read(uint32_t *data)
+{
+
+  // Fifo array is empty
+  if(Fifo_Write_ptr == Fifo_Read_ptr)
+  {
+	return 0;
+  }
+
+   *data =  *Fifo_Read_ptr;
+
+   volatile uint32_t *Fifo_Read_ptr_next = Fifo_Read_ptr + 1;
+
+   //Wrap-around
+   if(Fifo_Read_ptr_next == &SensorDataPuffer[FIFOMAXSIZE])
+   {
+	   Fifo_Read_ptr_next = &SensorDataPuffer[0];
+   }
+   else
+   {
+	  Fifo_Read_ptr = Fifo_Read_ptr_next;
+   }
+
+   return 1;
+}

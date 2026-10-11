@@ -1,0 +1,17 @@
+#include <stdint.h>
+#include "uart.h"
+
+
+int __io_putchar(int ch)
+{
+	uart_write(ch);
+
+	return ch;
+}
+int main(void)
+{
+  while(1)
+  {
+	  printf("Test\n\r");
+  }
+}

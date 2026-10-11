@@ -1,0 +1,9 @@
+#include "uart.h"
+
+
+void UART1_Init(void)
+{
+	/*Enable Clock*/
+
+
+}

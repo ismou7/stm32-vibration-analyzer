@@ -1,0 +1,61 @@
+2026-10-10 08:01:56,016 [INFO] Activator:176 - 
+
+
+2026-10-10 08:01:56,023 [INFO] Activator:177 - !SESSION log4j initialized
+2026-10-10 08:02:00,822 [INFO] LogOutputStream:77 - [STDOUT_REDIRECT] 
+2026-10-10 08:02:01,205 [ERROR] ConfigurationRetriever:142 - IOException on connection: sw-center.st.com
+2026-10-10 08:02:01,205 [ERROR] ConfigurationRetriever:142 - IOException on connection: sw-center.st.com
+2026-10-10 08:02:01,206 [ERROR] ConfigurationRetriever:142 - IOException on connection: sw-center.st.com
+2026-10-10 08:09:40,799 [ERROR] ConfigurationRetriever:142 - IOException on connection: sw-center.st.com
+2026-10-10 08:09:40,800 [ERROR] ConfigurationRetriever:142 - IOException on connection: sw-center.st.com
+2026-10-10 08:09:40,800 [ERROR] ConfigurationRetriever:142 - IOException on connection: sw-center.st.com
+2026-10-10 08:34:18,303 [ERROR] ConfigurationRetriever:142 - IOException on connection: sw-center.st.com
+2026-10-10 08:34:18,304 [ERROR] ConfigurationRetriever:142 - IOException on connection: sw-center.st.com
+2026-10-10 08:34:18,305 [ERROR] ConfigurationRetriever:142 - IOException on connection: sw-center.st.com
+2026-10-10 08:34:24,223 [ERROR] ConfigurationRetriever:142 - IOException on connection: sw-center.st.com
+2026-10-10 08:34:24,224 [ERROR] ConfigurationRetriever:142 - IOException on connection: sw-center.st.com
+2026-10-10 08:34:24,225 [ERROR] ConfigurationRetriever:142 - IOException on connection: sw-center.st.com
+2026-10-10 08:38:08,339 [ERROR] ConfigurationRetriever:142 - IOException on connection: sw-center.st.com
+2026-10-10 08:38:08,340 [ERROR] ConfigurationRetriever:142 - IOException on connection: sw-center.st.com
+2026-10-10 08:38:08,340 [ERROR] ConfigurationRetriever:142 - IOException on connection: sw-center.st.com
+2026-10-10 08:38:11,929 [ERROR] ConfigurationRetriever:142 - IOException on connection: sw-center.st.com
+2026-10-10 08:38:11,930 [ERROR] ConfigurationRetriever:142 - IOException on connection: sw-center.st.com
+2026-10-10 08:38:11,931 [ERROR] ConfigurationRetriever:142 - IOException on connection: sw-center.st.com
+2026-10-10 14:03:50,847 [INFO] Activator:176 - 
+
+
+2026-10-10 14:03:50,849 [INFO] Activator:177 - !SESSION log4j initialized
+2026-10-10 14:03:57,418 [INFO] LogOutputStream:77 - [STDOUT_REDIRECT] 
+2026-10-10 14:42:54,982 [ERROR] ConfigurationRetriever:142 - IOException on connection: Connect timed out
+2026-10-10 14:42:56,983 [ERROR] ConfigurationRetriever:142 - IOException on connection: Connect timed out
+2026-10-10 14:42:58,985 [ERROR] ConfigurationRetriever:142 - IOException on connection: Connect timed out
+2026-10-10 14:45:16,989 [ERROR] ConfigurationRetriever:142 - IOException on connection: Read timed out
+2026-10-10 14:45:20,121 [ERROR] ConfigurationRetriever:142 - IOException on connection: Read timed out
+2026-10-10 14:45:29,724 [ERROR] ConfigurationRetriever:142 - IOException on connection: Connect timed out
+2026-10-10 14:45:31,726 [ERROR] ConfigurationRetriever:142 - IOException on connection: Connect timed out
+2026-10-10 15:21:45,922 [ERROR] ConfigurationRetriever:142 - IOException on connection: Connect timed out
+2026-10-10 15:22:39,754 [ERROR] ConfigurationRetriever:142 - IOException on connection: sw-center.st.com
+2026-10-10 15:22:39,754 [ERROR] ConfigurationRetriever:142 - IOException on connection: sw-center.st.com
+2026-10-10 15:22:39,754 [ERROR] ConfigurationRetriever:142 - IOException on connection: sw-center.st.com
+2026-10-10 15:22:55,590 [ERROR] ConfigurationRetriever:142 - IOException on connection: Read timed out
+2026-10-10 15:22:57,591 [ERROR] ConfigurationRetriever:142 - IOException on connection: Connect timed out
+2026-10-10 15:23:02,286 [ERROR] ConfigurationRetriever:142 - IOException on connection: Read timed out
+2026-10-10 15:23:04,289 [ERROR] ConfigurationRetriever:142 - IOException on connection: Connect timed out
+2026-10-10 15:23:06,290 [ERROR] ConfigurationRetriever:142 - IOException on connection: Connect timed out
+2026-10-10 15:23:08,339 [ERROR] ConfigurationRetriever:142 - IOException on connection: Connect timed out
+2026-10-10 15:23:10,340 [ERROR] ConfigurationRetriever:142 - IOException on connection: Connect timed out
+2026-10-10 15:23:12,341 [ERROR] ConfigurationRetriever:142 - IOException on connection: Connect timed out
+2026-10-10 18:06:13,161 [INFO] Activator:176 - 
+
+
+2026-10-10 18:06:13,163 [INFO] Activator:177 - !SESSION log4j initialized
+2026-10-10 18:06:16,801 [INFO] LogOutputStream:77 - [STDOUT_REDIRECT] 
+2026-10-10 18:06:17,127 [ERROR] ConfigurationRetriever:142 - IOException on connection: sw-center.st.com
+2026-10-10 18:06:17,127 [ERROR] ConfigurationRetriever:142 - IOException on connection: sw-center.st.com
+2026-10-10 18:06:17,127 [ERROR] ConfigurationRetriever:142 - IOException on connection: sw-center.st.com
+2026-10-10 18:08:18,673 [ERROR] ConfigurationRetriever:142 - IOException on connection: sw-center.st.com
+2026-10-10 18:08:18,675 [ERROR] ConfigurationRetriever:142 - IOException on connection: sw-center.st.com
+2026-10-10 18:08:18,675 [ERROR] ConfigurationRetriever:142 - IOException on connection: sw-center.st.com
+2026-10-10 18:12:32,108 [ERROR] ConfigurationRetriever:142 - IOException on connection: sw-center.st.com
+2026-10-10 18:12:32,108 [ERROR] ConfigurationRetriever:142 - IOException on connection: sw-center.st.com
+2026-10-10 18:12:32,110 [ERROR] ConfigurationRetriever:142 - IOException on connection: sw-center.st.com
